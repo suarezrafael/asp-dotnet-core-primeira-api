@@ -8,6 +8,7 @@ using Cities.API.Models;
 
 namespace Cities.API.Controllers
 {
+
     [ApiController]
     [Route("api/cities/{cityId}/pointsofinterest")]
     public class PointsOfInterestController: ControllerBase
