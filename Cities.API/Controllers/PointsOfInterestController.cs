@@ -8,7 +8,6 @@ using Cities.API.Models;
 
 namespace Cities.API.Controllers
 {
-
     /// <summary>
     /// Controller api from cities
     /// </summary>
@@ -16,8 +15,13 @@ namespace Cities.API.Controllers
     [Route("api/cities/{cityId}/pointsofinterest")]
     public class PointsOfInterestController: ControllerBase
     {
+        /// <summary>
+        /// GET Point of interest
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <returns></returns>
         [HttpGet]
-        public IActionResult GetPointIfInterest(int cityId)
+        public IActionResult GetPointOfInterest(int cityId)
         {
             var city = CitiesDataStore.Current.Cities
                 .FirstOrDefault(f => f.Id == cityId);
@@ -30,7 +34,7 @@ namespace Cities.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetPointOfInterest")]
-        public IActionResult GetPointofInterest(int cityId, int id)
+        public IActionResult GetPointOfInterest(int cityId, int id)
         {
             var city = CitiesDataStore.Current.Cities
                 .FirstOrDefault(f=>f.Id == cityId);
