@@ -133,6 +133,13 @@ namespace Cities.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Partial Updade
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <param name="id"></param>
+        /// <param name="patchDoc"></param>
+        /// <returns></returns>
         [HttpPatch("{id}")]
         public IActionResult PartiallyUpdatePointOfInterest(int cityId, int id,
             [FromBody]JsonPatchDocument<PointOfInterestForUpdateDto> patchDoc)
@@ -177,6 +184,29 @@ namespace Cities.API.Controllers
             }
             pointOfInterestFromStore.Name = pointOfInterestToPatch.Name;
             pointOfInterestFromStore.Description = pointOfInterestToPatch.Description;
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletePointOfInterest(int cityId, int id)
+        {
+            var city = CitiesDataStore.Current.Cities
+                .FirstOrDefault(c=>c.Id == cityId);
+            if(city == null)
+            {
+                return NotFound();
+            }
+            var pointOfInterestFromStore = city.PointsOfInterest
+                .FirstOrDefault(p=>p.Id == id);
+
+            if (pointOfInterestFromStore == null)
+            {
+                return NotFound();
+            }
+
+            city.PointsOfInterest.Remove(pointOfInterestFromStore);
+
+
             return NoContent();
         }
     }
