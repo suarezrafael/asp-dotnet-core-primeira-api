@@ -45,7 +45,7 @@ namespace Cities.API.Context
                 {
                     Id = 1,
                     CityId = 1,
-                    Nome = "Central Park",
+                    Name = "Central Park",
                     Description = "The most visited urban park in the United States."
 
                 },
@@ -53,35 +53,35 @@ namespace Cities.API.Context
                 {
                     Id = 2,
                     CityId = 1,
-                    Nome = "Empire State Building",
+                    Name = "Empire State Building",
                     Description = "A 102-story skyscraper located in Midtown Manhattan."
                 },
                   new PointOfInterest()
                   {
                       Id = 3,
                       CityId = 2,
-                      Nome = "Cathedral",
+                      Name = "Cathedral",
                       Description = "A Gothic style cathedral, conceived by architects Jan and Pieter Appelmans."
                   },
                 new PointOfInterest()
                 {
                     Id = 4,
                     CityId = 2,
-                    Nome = "Antwerp Central Station",
+                    Name = "Antwerp Central Station",
                     Description = "The the finest example of railway architecture in Belgium."
                 },
                 new PointOfInterest()
                 {
                     Id = 5,
                     CityId = 3,
-                    Nome = "Eiffel Tower",
+                    Name = "Eiffel Tower",
                     Description = "A wrought iron lattice tower on the Champ de Mars, named after engineer Gustave Eiffel."
                 },
                 new PointOfInterest()
                 {
                     Id = 6,
                     CityId = 3,
-                    Nome = "The Louvre",
+                    Name = "The Louvre",
                     Description = "The world's largest museum."
                 }
                 );
