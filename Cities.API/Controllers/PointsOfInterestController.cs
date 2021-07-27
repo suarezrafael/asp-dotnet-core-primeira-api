@@ -1,4 +1,5 @@
 ﻿using Cities.API.Models;
+using Cities.API.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,10 +16,12 @@ namespace Cities.API.Controllers
     public class PointsOfInterestController : ControllerBase
     {
         private readonly ILogger<PointsOfInterestController> _logger;
+        private readonly IMailService _mailService;
 
-        public PointsOfInterestController(ILogger<PointsOfInterestController> logger)
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger, IMailService localMailService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mailService = localMailService ?? throw new ArgumentNullException(nameof(localMailService));
         }
         /// <summary>
         /// GET Point of interest
@@ -56,6 +59,7 @@ namespace Cities.API.Controllers
 
             if (city == null)
             {
+                _logger.LogInformation($"City with id {cityId}  wasn't found when accessing point of interest.");
                 return NotFound();
             }
 
@@ -64,6 +68,7 @@ namespace Cities.API.Controllers
 
             if (pointOfInterest == null)
             {
+                _logger.LogInformation($"Point Of Interest with id {id} wasn't found.");
                 return NotFound();
             }
 
@@ -90,6 +95,7 @@ namespace Cities.API.Controllers
 
             if (city == null)
             {
+                _logger.LogInformation($"City with id {cityId} wasn't found when accessing point of interest.");
                 return NotFound();
             }
 
@@ -221,7 +227,9 @@ namespace Cities.API.Controllers
 
             city.PointsOfInterest.Remove(pointOfInterestFromStore);
 
-
+            _mailService.Send("Point of interest deleted.",
+                $"Point of interest {pointOfInterestFromStore.Name} with id {pointOfInterestFromStore.Id} was deleted."
+                );
             return NoContent();
         }
     }
