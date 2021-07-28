@@ -94,29 +94,28 @@ namespace Cities.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
 
-            if (city == null)
+            if (!_cityInfoRepository.CityExists(cityId))
             {
-                _logger.LogInformation($"City with id {cityId} wasn't found when accessing point of interest.");
+                _logger.LogInformation($"City with id {cityId} wasn't " +
+                    $"found when accessing point of interest.");
                 return NotFound();
             }
 
-            var maxPointOfInterestId = CitiesDataStore.Current.Cities.SelectMany(c => c.PointsOfInterest).Max(p => p.Id);
+            var finalPointOfInterest = _mapper
+                .Map<Entities.PointOfInterest>(pointOfInterestCreationDto);
 
-            var finalPointOfInterest = new PointOfInterestDto()
-            {
-                Id = ++maxPointOfInterestId,
-                Name = pointOfInterestCreationDto.Name,
-                Description = pointOfInterestCreationDto.Description
-            };
+            _cityInfoRepository.AddPointOfInterest(cityId, finalPointOfInterest);
 
-            city.PointsOfInterest.Add(finalPointOfInterest);
+            _cityInfoRepository.Save();
+
+            var createdPointOfInterestToReturn = _mapper
+                .Map<Models.PointOfInterestDto>(finalPointOfInterest);
 
             return CreatedAtRoute(
                 "GetPointOfInterest",
-                new { cityId, id = finalPointOfInterest.Id },
-                finalPointOfInterest
+                new { cityId, id = createdPointOfInterestToReturn.Id },
+                createdPointOfInterestToReturn
                 );
         }
 
