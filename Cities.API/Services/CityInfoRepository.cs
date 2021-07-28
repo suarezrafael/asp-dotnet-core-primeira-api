@@ -67,7 +67,7 @@ namespace Cities.API.Services
 
         public void DeletePointOfInterest(PointOfInterest pointOfInterest)
         {
-            throw new NotImplementedException();
+            _context.PointsOfInterest.Remove(pointOfInterest);
         }
     }
 }
