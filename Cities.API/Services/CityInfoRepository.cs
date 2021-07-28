@@ -59,5 +59,15 @@ namespace Cities.API.Services
         {
             return (_context.SaveChanges() >= 0);
         }
+
+        public void UpdatePointOfInterest(int cityId, PointOfInterest pointOfInterest)
+        {
+
+        }
+
+        public void DeletePointOfInterest(PointOfInterest pointOfInterest)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
