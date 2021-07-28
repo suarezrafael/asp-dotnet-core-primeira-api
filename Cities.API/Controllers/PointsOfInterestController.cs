@@ -182,8 +182,16 @@ namespace Cities.API.Controllers
                 return NotFound();
             }
 
-            var pointOfInterestToPatch = _mapper
-                .Map<PointOfInterestForUpdateDto>(pointOfInterestEntity);
+            // Caso queira usar autoMapper
+            //var pointOfInterestToPatch = _mapper
+            //    .Map<PointOfInterestForUpdateDto>(pointOfInterestEntity);
+
+            var pointOfInterestToPatch =
+                new PointOfInterestForUpdateDto()
+                {
+                    Name = pointOfInterestEntity.Name,
+                    Description = pointOfInterestEntity.Description
+                };
 
             patchDoc.ApplyTo(pointOfInterestToPatch, ModelState);
 
@@ -202,7 +210,10 @@ namespace Cities.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            _mapper.Map(pointOfInterestToPatch,pointOfInterestEntity);
+            // Caso queira usar autoMapper
+            //_mapper.Map(pointOfInterestToPatch,pointOfInterestEntity);
+            pointOfInterestEntity.Name = pointOfInterestToPatch.Name;
+            pointOfInterestEntity.Description = pointOfInterestToPatch.Description;
 
             _cityInfoRepository
                 .UpdatePointOfInterest(cityId, pointOfInterestEntity);
